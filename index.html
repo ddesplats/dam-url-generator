@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Générateur d'URL Média - Leroy Merlin / Adeo</title>
+    <title>Générateur d'URL Média</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
@@ -49,21 +49,19 @@
     </style>
 </head>
 <body class="p-4 md:p-8 text-slate-800">
-    <div class="max-w-5xl mx-auto">
+    <div class="max-w-6xl mx-auto">
         <header class="mb-8">
             <div class="flex items-center gap-3 mb-2">
                 <div class="w-10 h-10 bg-[#009245] rounded-lg flex items-center justify-center text-white font-bold text-xl">LM</div>
-                <h1 class="text-3xl font-bold">Générateur d'URL Média</h1>
+                <h1 class="text-3xl font-bold">Générateur d'URL Média & Aperçu</h1>
             </div>
-            <p class="text-slate-500">Outil de configuration d'URL Leroy Merlin avec paramètres Fastly IO.</p>
+            <p class="text-slate-500">Configuration d'URL avec rafraîchissement à la validation (Perte de focus ou Entrée).</p>
         </header>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- Configuration Section -->
+            <!-- Structure URL -->
             <section class="card p-6 lg:col-span-1 h-fit">
-                <h2 class="text-lg font-semibold mb-4 flex items-center gap-2 border-b pb-2">
-                    Structure URL
-                </h2>
+                <h2 class="text-lg font-semibold mb-4 border-b pb-2">Structure URL</h2>
                 
                 <div class="space-y-4">
                     <div>
@@ -85,7 +83,7 @@
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Nom du média (libre)</label>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Nom du média</label>
                         <input type="text" id="mediaName" class="input-field" placeholder="ex: perceuse-sans-fil">
                     </div>
 
@@ -96,19 +94,16 @@
                 </div>
             </section>
 
-            <!-- Query Parameters Section -->
+            <!-- Paramètres Fastly -->
             <section class="card p-6 lg:col-span-2 flex flex-col">
                 <div class="flex justify-between items-center mb-4 border-b pb-2">
-                    <h2 class="text-lg font-semibold flex items-center gap-2">
-                        Paramètres Fastly IO
-                    </h2>
+                    <h2 class="text-lg font-semibold">Paramètres Fastly IO</h2>
                     <button id="addParam" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#009245] text-white rounded-md text-sm font-medium hover:bg-[#007a3a] transition-colors">
                         Ajouter
                     </button>
                 </div>
 
-                <div id="paramsList" class="space-y-4 flex-grow overflow-y-auto min-h-[300px] pr-2 py-2">
-                </div>
+                <div id="paramsList" class="space-y-4 flex-grow overflow-y-auto min-h-[300px] max-h-[400px] pr-2 py-2"></div>
                 
                 <div id="noParamsMsg" class="flex-grow flex items-center justify-center py-12 text-slate-400 italic text-sm">
                     Aucun paramètre configuré.
@@ -116,30 +111,52 @@
             </section>
         </div>
 
-        <!-- Result Section -->
-        <section class="mt-8 card p-6 border-2 border-green-100 bg-green-50/20 shadow-lg">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-lg font-semibold text-slate-800">URL Générée</h2>
-                <div id="copyToast" class="hidden text-xs font-semibold text-green-600 bg-green-100 px-2 py-1 rounded">Copié !</div>
-            </div>
-            
-            <div class="relative group">
-                <div class="bg-white border border-slate-200 p-5 rounded-lg pr-24 transition-all hover:border-green-400 group shadow-sm">
-                    <a id="resultUrl" href="#" target="_blank" class="url-display text-blue-600 hover:underline text-sm sm:text-base font-medium break-all leading-relaxed">
-                        Chargement...
-                    </a>
+        <!-- Section Résultat et Aperçu -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
+            <!-- URL Générée -->
+            <section class="card p-6 lg:col-span-2 border-2 border-green-100 bg-green-50/20 shadow-lg flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-lg font-semibold text-slate-800">URL Générée</h2>
+                        <div id="copyToast" class="hidden text-xs font-semibold text-green-600 bg-green-100 px-2 py-1 rounded">Copié !</div>
+                    </div>
+                    
+                    <div class="relative group">
+                        <div class="bg-white border border-slate-200 p-5 rounded-lg pr-24 transition-all hover:border-green-400 shadow-sm">
+                            <a id="resultUrl" href="#" target="_blank" class="url-display text-blue-600 hover:underline text-sm sm:text-base font-medium break-all leading-relaxed">
+                                Chargement...
+                            </a>
+                        </div>
+                        
+                        <div class="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
+                            <button id="copyBtn" class="p-2 text-slate-400 hover:text-green-600 hover:bg-green-50 rounded-md transition-all" title="Copier l'URL">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                            </button>
+                            <a id="openLink" href="#" target="_blank" class="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-all" title="Ouvrir">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
-                    <button id="copyBtn" class="p-2 text-slate-400 hover:text-green-600 hover:bg-green-50 rounded-md transition-all" title="Copier l'URL">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                    </button>
-                    <a id="openLink" href="#" target="_blank" class="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-all" title="Ouvrir">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-                    </a>
+                <p class="text-xs text-slate-400 mt-4 italic">
+                    💡 Modifiez un champ et appuyez sur <strong>Entrée</strong> ou changez de champ (<strong>Perte de focus</strong>) pour mettre à jour l'URL et l'aperçu.
+                </p>
+            </section>
+
+            <!-- Zone d'aperçu de l'image -->
+            <section class="card p-6 lg:col-span-1 flex flex-col items-center justify-center min-h-[220px] bg-slate-50 border border-slate-200">
+                <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500 mb-3 self-start">Aperçu de l'image</h2>
+                <div class="relative w-full h-48 flex items-center justify-center bg-white border border-slate-200 rounded-lg overflow-hidden p-2">
+                    <div id="previewPlaceholder" class="text-xs text-slate-400 text-center">
+                        Renseignez un ID Média pour afficher l'aperçu
+                    </div>
+                    <div id="previewLoader" class="hidden text-xs text-slate-500 animate-pulse">
+                        Chargement de l'image...
+                    </div>
+                    <img id="previewImg" class="max-h-full max-w-full object-contain hidden" alt="Aperçu média" />
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
     </div>
 
     <script>
@@ -147,15 +164,16 @@
             { key: 'format', label: 'Format de sortie', hint: 'Valeurs : webp, pjpg, png, gif, bjpg.' },
             { key: 'width', label: 'Largeur (w)', hint: 'Pixels (ex: 800) ou ratio (ex: 0.5).' },
             { key: 'height', label: 'Hauteur (h)', hint: 'Pixels (ex: 600) ou ratio (ex: 0.5).' },
-            { key: 'auto', label: 'Optimisation auto', hint: 'Valeur : webp (sélection auto du format).' },
-            { key: 'quality', label: 'Qualité', hint: 'Nombre de 1 à 100. Défaut recommandé : 85.' },
+            { key: 'auto', label: 'Optimisation auto', hint: 'Valeur : webp.' },
+            { key: 'quality', label: 'Qualité', hint: 'Nombre de 1 à 100.' },
             { key: 'fit', label: 'Ajustement', hint: 'Valeurs : bounds, cover, crop.' },
-            { key: 'crop', label: 'Rognage', hint: 'Ex: 200,200 ou "smart" (centrage intelligent).' },
+            { key: 'crop', label: 'Rognage (w,h,x,y)', hint: 'Ex: 300,300,x0,y0 (rognage au coin haut-gauche).' },
+            { key: 'precrop', label: 'Rognage avant redim.', hint: 'Ex: 500,500,x100,y50.' },
             { key: 'optimize', label: 'Compression', hint: 'Valeurs : low, medium, high.' },
-            { key: 'blur', label: 'Flou', hint: 'Nombre de 1 à 1000.' },
-            { key: 'brightness', label: 'Luminosité', hint: 'Valeur de -100 à 100.' },
-            { key: 'contrast', label: 'Contraste', hint: 'Valeur de -100 à 100.' },
-            { key: 'orient', label: 'Orientation', hint: 'Valeurs : r, l, h, v (rotations/miroirs).' },
+            { key: 'blur', label: 'Flou', hint: '1 à 1000.' },
+            { key: 'brightness', label: 'Luminosité', hint: '-100 à 100.' },
+            { key: 'contrast', label: 'Contraste', hint: '-100 à 100.' },
+            { key: 'orient', label: 'Orientation', hint: 'r, l, h, v, 1-8.' },
             { key: 'bg-color', label: 'Fond', hint: 'Hex sans # (ex: ffffff).' },
             { key: 'dpr', label: 'DPR', hint: 'Multiplicateur Retina (ex: 2).' },
             { key: 'sharpen', label: 'Netteté', hint: 'Format : [amount],[radius],[threshold].' }
@@ -174,16 +192,21 @@
         const copyBtn = document.getElementById('copyBtn');
         const copyToast = document.getElementById('copyToast');
 
+        const previewImg = document.getElementById('previewImg');
+        const previewPlaceholder = document.getElementById('previewPlaceholder');
+        const previewLoader = document.getElementById('previewLoader');
+
         let paramsState = [];
 
-        function updateUrl() {
+        function updateUrlAndPreview() {
             const domain = domainInput.value.trim() || '[domain]';
             const source = sourceSelect.value;
-            const mediaId = idInput.value.trim() || '[id]';
+            const mediaId = idInput.value.trim();
             const mediaName = nameInput.value.trim() || '[name]';
             const extension = extInput.value.trim() || '[ext]';
 
-            let url = `https://${domain}/${source}/${mediaId}/${mediaName}.${extension}`;
+            const displayId = mediaId || '[id]';
+            let url = `https://${domain}/${source}/${displayId}/${mediaName}.${extension}`;
 
             const validParams = paramsState.filter(p => p.key.trim() !== "" || (p.key === 'custom' && p.manualKey.trim() !== ""));
             if (validParams.length > 0) {
@@ -199,6 +222,46 @@
             resultUrl.textContent = url;
             resultUrl.href = url;
             openLink.href = url;
+
+            // Gestion de la preview
+            if (mediaId !== "") {
+                previewPlaceholder.classList.add('hidden');
+                previewImg.classList.add('hidden');
+                previewLoader.classList.remove('hidden');
+
+                previewImg.src = url;
+            } else {
+                previewImg.classList.add('hidden');
+                previewLoader.classList.add('hidden');
+                previewPlaceholder.textContent = "Renseignez un ID Média pour afficher l'aperçu";
+                previewPlaceholder.classList.remove('hidden');
+            }
+        }
+
+        previewImg.onload = () => {
+            previewLoader.classList.add('hidden');
+            previewImg.classList.remove('hidden');
+        };
+
+        previewImg.onerror = () => {
+            previewLoader.classList.add('hidden');
+            previewImg.classList.add('hidden');
+            previewPlaceholder.textContent = "⚠️ Impossible de charger l'image (URL invalide ou média inexistant)";
+            previewPlaceholder.classList.remove('hidden');
+        };
+
+        // Fonction pour attacher les événements Blur / Enter / Change
+        function bindValidationEvents(element) {
+            // L'événement change sur un input text se déclenche à la perte de focus (blur) ou à la touche Entrée
+            element.addEventListener('change', updateUrlAndPreview);
+            
+            if (element.tagName === 'INPUT') {
+                element.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        element.blur();
+                    }
+                });
+            }
         }
 
         function createParamRow(paramObj) {
@@ -257,25 +320,25 @@
                     paramObj.manualKey = '';
                 }
                 updateHint(e.target.value);
-                updateUrl();
+                updateUrlAndPreview();
             });
 
+            bindValidationEvents(manualKey);
             manualKey.addEventListener('input', (e) => {
                 paramObj.manualKey = e.target.value.replace(/[^a-zA-Z0-9_-]/g, '');
                 e.target.value = paramObj.manualKey;
-                updateUrl();
             });
 
-            valInput.addEventListener('input', (e) => {
-                paramObj.value = e.target.value;
-                updateUrl();
+            bindValidationEvents(valInput);
+            valInput.addEventListener('change', () => {
+                paramObj.value = valInput.value;
             });
 
             deleteBtn.addEventListener('click', () => {
                 paramsState = paramsState.filter(p => p.id !== paramObj.id);
                 row.remove();
                 checkParamsEmpty();
-                updateUrl();
+                updateUrlAndPreview();
             });
 
             return row;
@@ -294,12 +357,10 @@
             paramsState.push(newParam);
             paramsList.appendChild(createParamRow(newParam));
             checkParamsEmpty();
-            updateUrl();
         });
 
-        [domainInput, sourceSelect, idInput, nameInput, extInput].forEach(el => {
-            el.addEventListener('input', updateUrl);
-        });
+        // Liaison des champs principaux aux événements de validation (Blur / Enter / Change)
+        [domainInput, sourceSelect, idInput, nameInput, extInput].forEach(bindValidationEvents);
 
         copyBtn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -310,9 +371,7 @@
             });
         });
 
-        updateUrl();
+        updateUrlAndPreview();
     </script>
 </body>
 </html>
-generateur_url_media.html
-Affichage de generateur_url_media.html.
