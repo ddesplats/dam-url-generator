@@ -95,10 +95,6 @@ Les paramètres ci-dessous sont ceux couramment utilisés pour la transformation
   - Redimensionne la hauteur de l'image
   - Exemple : `height=300`
 
-- `dpr`
-  - Gère la densité de pixels pour les écrans Retina
-  - Exemple : `dpr=2`
-
 - `fit`
   - Détermine la façon dont l'image s'adapte au cadre
   - Valeurs courantes : `bounds`, `cover`, `crop`
@@ -130,15 +126,15 @@ Les paramètres ci-dessous sont ceux couramment utilisés pour la transformation
   - Contrôle la qualité de compression
   - Exemple : `quality=80`
 
-- `optimize`
-  - Applique des optimisations de compression
-  - Exemples : `optimize=low`, `optimize=medium`, `optimize=high`
-
-- `auto`
-  - Active une optimisation automatique
-  - Exemple : `auto=webp`
+- `dpr`
+  - Gère la densité de pixels pour les écrans Retina
+  - Exemple : `dpr=2`
 
 ### Ajustements visuels
+
+- `bw`
+  - Conversion en noir et blanc
+  - Exemple : `bw=1`
 
 - `brightness`
   - Luminosité
@@ -156,64 +152,11 @@ Les paramètres ci-dessous sont ceux couramment utilisés pour la transformation
   - Flou
   - Exemple : `blur=10`
 
-- `sharpen`
-  - Netteté
-  - Exemple : `sharpen=2,1,0.5`
-
-- `bw`
-  - Conversion en noir et blanc
-  - Exemple : `bw=1`
-
-### Orientation / fond / canvas
+### Orientation
 
 - `orient`
   - Rotation ou orientation de l'image
   - Exemple : `orient=90`
-
-- `bg-color`
-  - Couleur d'arrière-plan
-  - Exemple : `bg-color=ffffff`
-
-- `canvas`
-  - Ajoute de la zone autour de l'image
-  - Exemple : `canvas=300,300`
-
-- `pad`
-  - Ajoute des pixels autour de l'image
-  - Exemple : `pad=10`
-
-### Métadonnées / filtres
-
-- `metadata`
-  - Contrôle la conservation des métadonnées
-  - Exemple : `metadata=none`
-
-- `resize-filter`
-  - Choisit le filtre de redimensionnement
-  - Exemple : `resize-filter=mitchell`
-
-- `viewbox`
-  - Paramètre spécifique à certains cas d'utilisation d'image vectorielle
-
-### Paramètres avancés
-
-- `disable`
-  - Désactive certaines fonctionnalités par défaut
-
-- `enable`
-  - Active des fonctionnalités désactivées par défaut
-
-- `profile`
-  - Paramètre lié aux profils de conversion de vidéo/image
-
-- `level`
-  - Niveau de traitement ou contraintes de conversion
-
-- `frame`
-  - Extrait une frame depuis une image animée
-
-- `canvas`
-  - Gère un canvas supplémentaire autour de l'image
 
 ---
 

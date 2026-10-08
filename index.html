@@ -161,22 +161,22 @@
 
     <script>
         const FASTLY_PARAMS = [
-            { key: 'format', label: 'Format de sortie', hint: 'Valeurs : webp, pjpg, png, gif, bjpg.' },
-            { key: 'width', label: 'Largeur (w)', hint: 'Pixels (ex: 800) ou ratio (ex: 0.5).' },
-            { key: 'height', label: 'Hauteur (h)', hint: 'Pixels (ex: 600) ou ratio (ex: 0.5).' },
-            { key: 'auto', label: 'Optimisation auto', hint: 'Valeur : webp.' },
-            { key: 'quality', label: 'Qualité', hint: 'Nombre de 1 à 100.' },
+            { key: 'width', label: 'Largeur', hint: 'Pixels (ex: 400) ou ratio (ex: 0.5).' },
+            { key: 'height', label: 'Hauteur', hint: 'Pixels (ex: 300) ou ratio (ex: 0.5).' },
             { key: 'fit', label: 'Ajustement', hint: 'Valeurs : bounds, cover, crop.' },
-            { key: 'crop', label: 'Rognage (w,h,x,y)', hint: 'Ex: 300,300,x0,y0 (rognage au coin haut-gauche).' },
-            { key: 'precrop', label: 'Rognage avant redim.', hint: 'Ex: 500,500,x100,y50.' },
-            { key: 'optimize', label: 'Compression', hint: 'Valeurs : low, medium, high.' },
-            { key: 'blur', label: 'Flou', hint: '1 à 1000.' },
+            { key: 'crop', label: 'Rognage', hint: 'Ex: 300,300,0,0.' },
+            { key: 'precrop', label: 'Rognage avant redim.', hint: 'Ex: 500,500,100,50.' },
+            { key: 'trim', label: 'Trim', hint: 'Supprime les pixels sur les bords (ex: auto).' },
+            { key: 'format', label: 'Format de sortie', hint: 'Valeurs : webp, jpg, png, gif.' },
+            { key: 'quality', label: 'Qualité', hint: 'Nombre de 1 à 100.' },
+            { key: 'dpr', label: 'DPR', hint: 'Multiplicateur Retina (ex: 2).' },
+            { key: 'bw', label: 'Noir et blanc', hint: 'Valeur : 1 pour activer.' },
             { key: 'brightness', label: 'Luminosité', hint: '-100 à 100.' },
             { key: 'contrast', label: 'Contraste', hint: '-100 à 100.' },
+            { key: 'saturation', label: 'Saturation', hint: 'Ex: 80.' },
+            { key: 'blur', label: 'Flou', hint: 'Ex: 10.' },
             { key: 'orient', label: 'Orientation', hint: 'r, l, h, v, 1-8.' },
-            { key: 'bg-color', label: 'Fond', hint: 'Hex sans # (ex: ffffff).' },
-            { key: 'dpr', label: 'DPR', hint: 'Multiplicateur Retina (ex: 2).' },
-            { key: 'sharpen', label: 'Netteté', hint: 'Format : [amount],[radius],[threshold].' }
+            { key: 'bg-color', label: 'Fond', hint: 'Hex sans # (ex: ffffff).' }
         ];
 
         const domainInput = document.getElementById('domain');
