@@ -58,9 +58,9 @@
             <p class="text-slate-500">Configuration d'URL avec rafraîchissement à la validation (Perte de focus ou Entrée).</p>
         </header>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
             <!-- Structure URL -->
-            <section class="card p-6 lg:col-span-1 h-fit">
+            <section class="card p-6 xl:col-span-1 h-fit">
                 <h2 class="text-lg font-semibold mb-4 border-b pb-2">Structure URL</h2>
                 
                 <div class="space-y-4">
@@ -94,40 +94,27 @@
                 </div>
             </section>
 
-            <!-- Paramètres Fastly -->
-            <section class="card p-6 lg:col-span-2 flex flex-col">
-                <div class="flex justify-between items-center mb-4 border-b pb-2">
-                    <h2 class="text-lg font-semibold">Paramètres Fastly IO</h2>
-                    <button id="addParam" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#009245] text-white rounded-md text-sm font-medium hover:bg-[#007a3a] transition-colors">
-                        Ajouter
-                    </button>
-                </div>
-
-                <div id="paramsList" class="space-y-4 flex-grow overflow-y-auto min-h-[300px] max-h-[400px] pr-2 py-2"></div>
-                
-                <div id="noParamsMsg" class="flex-grow flex items-center justify-center py-12 text-slate-400 italic text-sm">
-                    Aucun paramètre configuré.
-                </div>
-            </section>
-        </div>
-
-        <!-- Section Résultat et Aperçu -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
-            <!-- URL Générée -->
-            <section class="card p-6 lg:col-span-2 border-2 border-green-100 bg-green-50/20 shadow-lg flex flex-col justify-between">
-                <div>
-                    <div class="flex justify-between items-center mb-4">
-                        <h2 class="text-lg font-semibold text-slate-800">URL Générée</h2>
-                        <div id="copyToast" class="hidden text-xs font-semibold text-green-600 bg-green-100 px-2 py-1 rounded">Copié !</div>
+            <div class="xl:col-span-2">
+                <!-- Zone d'aperçu de l'image -->
+                <section class="card p-6 flex flex-col min-h-[360px] bg-slate-50 border border-slate-200">
+                    <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500 mb-3 self-start">Aperçu de l'image</h2>
+                    <div class="relative w-full h-[330px] flex items-center justify-center bg-white border border-slate-200 rounded-lg overflow-hidden p-2">
+                        <div id="previewPlaceholder" class="text-xs text-slate-400 text-center">
+                            Renseignez un ID Média pour afficher l'aperçu
+                        </div>
+                        <div id="previewLoader" class="hidden text-xs text-slate-500 animate-pulse">
+                            Chargement de l'image...
+                        </div>
+                        <img id="previewImg" class="max-h-full max-w-full object-contain hidden" alt="Aperçu média" />
                     </div>
-                    
-                    <div class="relative group">
+
+                    <div class="relative group mt-4">
                         <div class="bg-white border border-slate-200 p-5 rounded-lg pr-24 transition-all hover:border-green-400 shadow-sm">
                             <a id="resultUrl" href="#" target="_blank" class="url-display text-blue-600 hover:underline text-sm sm:text-base font-medium break-all leading-relaxed">
                                 Chargement...
                             </a>
                         </div>
-                        
+
                         <div class="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
                             <button id="copyBtn" class="p-2 text-slate-400 hover:text-green-600 hover:bg-green-50 rounded-md transition-all" title="Copier l'URL">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
@@ -137,29 +124,39 @@
                             </a>
                         </div>
                     </div>
-                </div>
-                <p class="text-xs text-slate-400 mt-4 italic">
-                    💡 Modifiez un champ et appuyez sur <strong>Entrée</strong> ou changez de champ (<strong>Perte de focus</strong>) pour mettre à jour l'URL et l'aperçu.
-                </p>
-            </section>
-
-            <!-- Zone d'aperçu de l'image -->
-            <section class="card p-6 lg:col-span-1 flex flex-col items-center justify-center min-h-[220px] bg-slate-50 border border-slate-200">
-                <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500 mb-3 self-start">Aperçu de l'image</h2>
-                <div class="relative w-full h-48 flex items-center justify-center bg-white border border-slate-200 rounded-lg overflow-hidden p-2">
-                    <div id="previewPlaceholder" class="text-xs text-slate-400 text-center">
-                        Renseignez un ID Média pour afficher l'aperçu
+                    <div class="flex justify-end mt-3">
+                        <div id="copyToast" class="hidden text-xs font-semibold text-green-600 bg-green-100 px-2 py-1 rounded">Copié !</div>
                     </div>
-                    <div id="previewLoader" class="hidden text-xs text-slate-500 animate-pulse">
-                        Chargement de l'image...
-                    </div>
-                    <img id="previewImg" class="max-h-full max-w-full object-contain hidden" alt="Aperçu média" />
-                </div>
-            </section>
+                    <p class="text-xs text-slate-400 mt-2 italic">
+                        💡 Modifiez un champ et appuyez sur <strong>Entrée</strong> ou changez de champ (<strong>Perte de focus</strong>) pour mettre à jour l'URL et l'aperçu.
+                    </p>
+                </section>
+            </div>
         </div>
+
+        <!-- Paramètres Fastly -->
+        <section class="card p-6 mt-8 flex flex-col">
+            <div class="flex justify-between items-center mb-4 border-b pb-2">
+                <h2 class="text-lg font-semibold">Redimensionner l'image</h2>
+                <div class="flex flex-col items-end gap-1 sm:flex-row sm:items-center sm:gap-4">
+                    <span id="sourceImageInfo" class="text-xs text-slate-500">Dimensions source : en attente</span>
+                    <button id="addParam" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#009245] text-white rounded-md text-sm font-medium hover:bg-[#007a3a] transition-colors">
+                        Ajouter
+                    </button>
+                </div>
+            </div>
+
+            <div id="paramsList" class="space-y-4 flex-grow overflow-y-auto min-h-[300px] max-h-[400px] pr-2 py-2"></div>
+            
+            <div id="noParamsMsg" class="flex-grow flex items-center justify-center py-12 text-slate-400 italic text-sm">
+                Aucun paramètre configuré.
+            </div>
+        </section>
     </div>
 
-    <script>
+    <script type="module">
+        import { buildMediaUrl, buildSourceMediaUrl, formatSourceImageInfo, getSourceImageExtension } from './media-utils.mjs';
+
         const FASTLY_PARAMS = [
             { key: 'width', label: 'Largeur', hint: 'Pixels (ex: 400) ou ratio (ex: 0.5).' },
             { key: 'height', label: 'Hauteur', hint: 'Pixels (ex: 300) ou ratio (ex: 0.5).' },
@@ -195,28 +192,45 @@
         const previewImg = document.getElementById('previewImg');
         const previewPlaceholder = document.getElementById('previewPlaceholder');
         const previewLoader = document.getElementById('previewLoader');
+        const sourceImageInfo = document.getElementById('sourceImageInfo');
 
         let paramsState = [];
+        let sourceImageRequestId = 0;
+        let lastSourceUrl = '';
 
         function updateUrlAndPreview() {
-            const domain = domainInput.value.trim() || '[domain]';
-            const source = sourceSelect.value;
-            const mediaId = idInput.value.trim();
-            const mediaName = nameInput.value.trim() || '[name]';
-            const extension = extInput.value.trim() || '[ext]';
+            const mediaParts = {
+                domain: domainInput.value,
+                source: sourceSelect.value,
+                mediaId: idInput.value,
+                mediaName: nameInput.value,
+                extension: extInput.value
+            };
+            const mediaId = mediaParts.mediaId.trim();
+            const sourceUrl = buildSourceMediaUrl(mediaParts);
+            const url = buildMediaUrl(mediaParts, paramsState);
 
-            const displayId = mediaId || '[id]';
-            let url = `https://${domain}/${source}/${displayId}/${mediaName}.${extension}`;
-
-            const validParams = paramsState.filter(p => p.key.trim() !== "" || (p.key === 'custom' && p.manualKey.trim() !== ""));
-            if (validParams.length > 0) {
-                const queryString = validParams
-                    .map(p => {
-                        const k = p.key === 'custom' ? p.manualKey : p.key;
-                        return `${encodeURIComponent(k)}=${encodeURIComponent(p.value)}`;
-                    })
-                    .join('&');
-                url += `?${queryString}`;
+            if (!mediaId) {
+                sourceImageRequestId++;
+                lastSourceUrl = '';
+                sourceImageInfo.textContent = 'Dimensions source : en attente';
+            } else if (sourceUrl !== lastSourceUrl) {
+                lastSourceUrl = sourceUrl;
+                const requestId = ++sourceImageRequestId;
+                const sourceImage = new Image();
+                const sourceExtension = getSourceImageExtension(mediaParts.extension);
+                sourceImageInfo.textContent = 'Chargement des dimensions...';
+                sourceImage.onload = () => {
+                    if (requestId === sourceImageRequestId) {
+                        sourceImageInfo.textContent = formatSourceImageInfo(sourceImage.naturalWidth, sourceImage.naturalHeight, mediaParts.extension);
+                    }
+                };
+                sourceImage.onerror = () => {
+                    if (requestId === sourceImageRequestId) {
+                        sourceImageInfo.textContent = `Dimensions indisponibles · ${sourceExtension}`;
+                    }
+                };
+                sourceImage.src = sourceUrl;
             }
 
             resultUrl.textContent = url;
@@ -327,11 +341,17 @@
             manualKey.addEventListener('input', (e) => {
                 paramObj.manualKey = e.target.value.replace(/[^a-zA-Z0-9_-]/g, '');
                 e.target.value = paramObj.manualKey;
+                updateUrlAndPreview();
             });
 
             bindValidationEvents(valInput);
+            valInput.addEventListener('input', () => {
+                paramObj.value = valInput.value;
+                updateUrlAndPreview();
+            });
             valInput.addEventListener('change', () => {
                 paramObj.value = valInput.value;
+                updateUrlAndPreview();
             });
 
             deleteBtn.addEventListener('click', () => {
