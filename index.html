@@ -69,14 +69,14 @@
                     <div class="flex items-center justify-between gap-4">
                         <div class="flex min-w-0 items-center gap-3">
                             <div class="w-10 h-10 shrink-0 bg-[#009245] rounded-lg flex items-center justify-center text-white font-bold text-xl">LM</div>
-                            <h1 class="text-3xl font-bold">Générateur d'URL Média & Aperçu</h1>
+                            <h1 class="text-3xl font-bold">Générateur d'URL Média</h1>
                         </div>
                         <span class="inline-flex shrink-0 items-center gap-1.5 px-3 py-2 text-sm font-semibold text-[#007a3a] hover:bg-green-50 rounded-md">
                             Aide
                             <svg class="help-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
                         </span>
                     </div>
-                    <p class="text-slate-500 mt-2">Configuration d'URL avec rafraîchissement à la validation (Perte de focus ou Entrée).</p>
+                    <p class="text-slate-500 mt-2">Configuration d'URL avec rafraîchissement à la validation (perte de focus ou Entrée).</p>
                 </summary>
 
                 <div class="mt-5 border-y border-slate-200 py-5">
@@ -221,7 +221,7 @@
             <div class="flex justify-between items-center mb-4 border-b pb-2">
                 <h2 class="text-lg font-semibold">Redimensionner l'image</h2>
                 <div class="flex flex-col items-end gap-1 sm:flex-row sm:items-center sm:gap-4">
-                    <span id="sourceImageInfo" class="text-xs text-slate-500">Dimensions source : en attente</span>
+                    <span class="text-xs text-slate-500">Dimensions source :</span><span id="sourceImageInfo" class="text-xs text-slate-500"> en attente</span>
                     <button id="addParam" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#009245] text-white rounded-md text-sm font-medium hover:bg-[#007a3a] transition-colors">
                         Ajouter
                     </button>
@@ -295,7 +295,7 @@
             if (!mediaId) {
                 sourceImageRequestId++;
                 lastSourceUrl = '';
-                sourceImageInfo.textContent = 'Dimensions source : en attente';
+                sourceImageInfo.textContent = 'en attente';
             } else if (sourceUrl !== lastSourceUrl) {
                 lastSourceUrl = sourceUrl;
                 const requestId = ++sourceImageRequestId;
