@@ -46,16 +46,98 @@
             margin-top: 0.25rem;
             line-height: 1.2;
         }
+        .help-summary {
+            list-style: none;
+            cursor: pointer;
+        }
+        .help-summary::-webkit-details-marker {
+            display: none;
+        }
+        .help-chevron {
+            transition: transform 0.2s;
+        }
+        .help-details[open] .help-chevron {
+            transform: rotate(180deg);
+        }
     </style>
 </head>
 <body class="p-4 md:p-8 text-slate-800">
     <div class="max-w-6xl mx-auto">
         <header class="mb-8">
-            <div class="flex items-center gap-3 mb-2">
-                <div class="w-10 h-10 bg-[#009245] rounded-lg flex items-center justify-center text-white font-bold text-xl">LM</div>
-                <h1 class="text-3xl font-bold">Générateur d'URL Média & Aperçu</h1>
-            </div>
-            <p class="text-slate-500">Configuration d'URL avec rafraîchissement à la validation (Perte de focus ou Entrée).</p>
+            <details class="help-details">
+                <summary class="help-summary">
+                    <div class="flex items-center justify-between gap-4">
+                        <div class="flex min-w-0 items-center gap-3">
+                            <div class="w-10 h-10 shrink-0 bg-[#009245] rounded-lg flex items-center justify-center text-white font-bold text-xl">LM</div>
+                            <h1 class="text-3xl font-bold">Générateur d'URL Média & Aperçu</h1>
+                        </div>
+                        <span class="inline-flex shrink-0 items-center gap-1.5 px-3 py-2 text-sm font-semibold text-[#007a3a] hover:bg-green-50 rounded-md">
+                            Aide
+                            <svg class="help-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                        </span>
+                    </div>
+                    <p class="text-slate-500 mt-2">Configuration d'URL avec rafraîchissement à la validation (Perte de focus ou Entrée).</p>
+                </summary>
+
+                <div class="mt-5 border-y border-slate-200 py-5">
+                    <section class="mb-6">
+                        <h2 class="text-lg font-semibold mb-2">Comprendre l'outil</h2>
+                        <p class="text-sm text-slate-600 leading-relaxed">Cet outil construit une URL à partir des informations d'un média du DAM. Il ne transforme pas l'image lui-même : Fastly reçoit l'URL, récupère le média source, applique les paramètres demandés et renvoie l'image transformée.</p>
+                        <p class="text-sm text-slate-600 mt-2"><strong>DAM</strong> → URL du média → <strong>Fastly</strong> → transformations → aperçu de l'image</p>
+                        <p class="text-sm text-slate-600 mt-2">Renseigne l'ID média et les informations nécessaires, puis ajoute les paramètres. L'URL et l'aperçu se mettent à jour à la modification des champs. Tu peux copier l'URL ou l'ouvrir directement. Les dimensions affichées correspondent à l'image source sans paramètres de transformation.</p>
+                    </section>
+
+                    <h2 class="text-lg font-semibold mb-3">Paramètres de transformation</h2>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-5 text-sm text-slate-600">
+                        <section>
+                            <h3 class="font-semibold text-slate-800 mb-2">Dimensions et ajustement</h3>
+                            <ul class="space-y-2">
+                                <li><code>width</code> : largeur souhaitée, en pixels ou en ratio. Exemple : <code>width=400</code>.</li>
+                                <li><code>height</code> : hauteur souhaitée, en pixels ou en ratio. Exemple : <code>height=300</code>.</li>
+                                <li><code>fit</code> : s'applique lorsque <code>width</code> et <code>height</code> sont définis. <code>bounds</code> conserve toute l'image dans le cadre, quitte à laisser une dimension en dessous; <code>cover</code> remplit le cadre, quitte à dépasser dans une dimension; <code>crop</code> redimensionne puis recadre au centre pour obtenir exactement le cadre demandé.</li>
+                            </ul>
+                        </section>
+
+                        <section>
+                            <h3 class="font-semibold text-slate-800 mb-2">Recadrage</h3>
+                            <ul class="space-y-2">
+                                <li><code>crop</code> : taille du recadrage, puis position facultative. Exemple : <code>crop=4000,2000,x0,y0</code> recadre depuis le coin supérieur gauche. Pour des coordonnées explicites, utilise les préfixes <code>x</code> et <code>y</code>.</li>
+                                <li>Position relative : <code>offset-x</code> et <code>offset-y</code> répartissent le recadrage selon un pourcentage; <code>50</code> centre l'image sur l'axe concerné. Exemple : <code>crop=4000,2000,offset-x50,offset-y50</code>.</li>
+                                <li><code>precrop</code> : recadrage effectué avant les autres transformations. Exemple : <code>precrop=500,500,x100,y50</code>.</li>
+                                <li><code>trim</code> : retire les pixels détectés sur les bords. Exemple : <code>trim=auto</code>.</li>
+                            </ul>
+                        </section>
+
+                        <section>
+                            <h3 class="font-semibold text-slate-800 mb-2">Format et densité</h3>
+                            <ul class="space-y-2">
+                                <li><code>format</code> : format de sortie, par exemple <code>webp</code>, <code>jpg</code>, <code>png</code> ou <code>gif</code>.</li>
+                                <li><code>quality</code> : qualité de compression de 1 à 100. Exemple : <code>quality=80</code>.</li>
+                                <li><code>dpr</code> : facteur de densité de pixels. Exemple : <code>dpr=2</code>.</li>
+                            </ul>
+                        </section>
+
+                        <section>
+                            <h3 class="font-semibold text-slate-800 mb-2">Ajustements visuels et orientation</h3>
+                            <ul class="space-y-2">
+                                <li><code>bw</code> : conversion en noir et blanc. Exemple : <code>bw=1</code>.</li>
+                                <li><code>brightness</code> : luminosité. Exemple : <code>brightness=20</code>.</li>
+                                <li><code>contrast</code> : contraste. Exemple : <code>contrast=-10</code>.</li>
+                                <li><code>saturation</code> : saturation. Exemple : <code>saturation=80</code>.</li>
+                                <li><code>blur</code> : niveau de flou. Exemple : <code>blur=10</code>.</li>
+                                <li><code>orient</code> : orientation de l'image.</li>
+                            </ul>
+                        </section>
+                    </div>
+
+                    <section class="mt-6">
+                        <h2 class="text-lg font-semibold mb-2">Exemple complet</h2>
+                        <p class="text-sm text-slate-600 mb-2">Ce lien recadre depuis le coin supérieur gauche, redimensionne à 800 px de large, convertit en WebP et fixe la qualité à 80 :</p>
+                        <code class="block rounded-md bg-slate-50 border border-slate-200 p-3 text-xs sm:text-sm break-all">https://media.adeo.com/media/3361466/test.jpg?crop=4000,2000,x0,y0&amp;width=800&amp;format=webp&amp;quality=80</code>
+                        <a class="inline-block mt-3 text-sm text-blue-600 hover:underline" href="https://www.fastly.com/documentation/reference/io/crop/" target="_blank" rel="noopener noreferrer">Documentation Fastly sur le recadrage</a>
+                    </section>
+                </div>
+            </details>
         </header>
 
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
@@ -160,7 +242,7 @@
         const FASTLY_PARAMS = [
             { key: 'width', label: 'Largeur', hint: 'Pixels (ex: 400) ou ratio (ex: 0.5).' },
             { key: 'height', label: 'Hauteur', hint: 'Pixels (ex: 300) ou ratio (ex: 0.5).' },
-            { key: 'fit', label: 'Ajustement', hint: 'Valeurs : bounds, cover, crop.' },
+            { key: 'fit', label: 'Ajustement', hint: 'N’agit que si width et height sont définis : bounds conserve toute l’image dans le cadre ; cover remplit le cadre et peut dépasser ; crop recadre au centre aux dimensions exactes.' },
             { key: 'crop', label: 'Rognage', hint: 'Redimensionnement simple: 300,300 ; Avec décalage relatif depuis bord haut-gauche : 300,300,offset-x50,offset-y50 ; Avec décalage en px depuis bord haut-gauche : 300,300,x100,y100.' },
             { key: 'precrop', label: 'Rognage avant redim.', hint: 'Ex: 500,500,x100,y50.' },
             { key: 'trim', label: 'Trim', hint: 'Supprime les pixels sur les bords (ex: auto).' },

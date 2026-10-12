@@ -96,9 +96,11 @@ Les paramètres ci-dessous sont ceux couramment utilisés pour la transformation
   - Exemple : `height=300`
 
 - `fit`
-  - Détermine la façon dont l'image s'adapte au cadre
-  - Valeurs courantes : `bounds`, `cover`, `crop`
-  - Exemple : `fit=crop`
+  - Définit comment l'image est ajustée aux dimensions `width` et `height` (les deux doivent être renseignées pour que `fit` ait un effet)
+  - `bounds` : conserve toute l'image dans le cadre; une dimension peut être inférieure à celle demandée
+  - `cover` : agrandit l'image pour couvrir le cadre; une dimension dépasse alors les dimensions demandées, sans recadrage automatique
+  - `crop` : redimensionne puis recadre au centre pour atteindre exactement les dimensions demandées
+  - Exemple : `width=400&height=300&fit=crop`
 
 ### Recadrage
 
@@ -111,7 +113,7 @@ Les paramètres ci-dessous sont ceux couramment utilisés pour la transformation
 
 - `precrop`
   - Coupe avant le redimensionnement
-  - Exemple : `precrop=500,500,100,50`
+  - Exemple : `precrop=500,500,x100,y50`
 
 - `trim`
   - Supprime les pixels sur les bords
