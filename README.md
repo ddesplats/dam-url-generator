@@ -105,8 +105,9 @@ Les paramètres ci-dessous sont ceux couramment utilisés pour la transformation
 - `crop`
   - Coupe une image selon des dimensions et un point de départ
   - Exemple : `crop=300,300,0,0`
-  - Exemple de crop depuis le bord gauche : `crop=800,600,0,0`
-  - Exemple de crop depuis plusieurs bords : `crop=800,600,100,50` pour retirer 100 px à gauche et 50 px en haut avant le recadrage
+  - Exemple de crop depuis le bord gauche : `crop=1000,800,0,0`
+  - Exemple de crop depuis plusieurs bords : `crop=1000,800,x100,y50` pour retirer 100 px à gauche et 50 px en haut avant le recadrage
+  - Exemple de crop depuis plusieurs bords : `crop=1000,800,offset-x100,offset-y50` pour recadrer en position relative, ici à 100% du bord gauche (donc crop depuis le bord droit en largeur) et à 50% du bord haut (donc crop depuis le milieu en hauteur)
 
 - `precrop`
   - Coupe avant le redimensionnement
